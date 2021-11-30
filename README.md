@@ -1,6 +1,7 @@
 ## NodeJS tasks
 
 cd ./src/1.1
+
 node index.js ./files ./new-files true
 
 ./files - source directory
