@@ -1,0 +1,28 @@
+{
+  "name": "ls-nodejs",
+  "version": "1.0.0",
+  "description": "Homework for the NodeJS course by LoftSchool",
+  "main": "index.js",
+  "scripts": {
+    "task_1.1": "node ./src/1.1/index.js",
+    "lint": "eslint ./src --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GarashchenkoSergei/ls-nodejs"
+  },
+  "author": "Sergei Garashchenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GarashchenkoSergei/ls-nodejs/issues"
+  },
+  "homepage": "https://github.com/GarashchenkoSergei/ls-nodejs",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1"
+  }
+}
