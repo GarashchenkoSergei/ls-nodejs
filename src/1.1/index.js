@@ -9,11 +9,8 @@ if (!sourceDirectory || !targetDirectory) {
   return console.log('Please specify both initial and target directories');
 }
 
-// взять папку, переработать файлы, если папка, то рекурсия
-// на каждую функцию сделать папку
-
 const copyFile = (file, filePath) => {
-  const firstLetter = file.charAt(0).toLowerCase();
+  const firstLetter = file.charAt(0).toUpperCase();
   const newFilePath = path.join(__dirname, targetDirectory, firstLetter, file);
   const newFolderPath = path.join(__dirname, targetDirectory, firstLetter);
   const targetDirectoryPath = path.join(__dirname, targetDirectory);
@@ -26,7 +23,7 @@ const copyFile = (file, filePath) => {
     fs.mkdirSync(newFolderPath);
   };
 
-  fs.rename(filePath, newFilePath, (err) => {
+  fs.copyFile(filePath, newFilePath, (err) => {
     if (err) {
       console.log(err);
     }
