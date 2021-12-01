@@ -4,6 +4,7 @@
   "description": "Homework for the NodeJS course by LoftSchool",
   "main": "index.js",
   "scripts": {
+    "start": "node ./src/1.2/index.js",
     "task_1.1": "node ./src/1.1/index.js",
     "lint": "eslint ./src --fix"
   },
@@ -17,7 +18,9 @@
     "url": "https://github.com/GarashchenkoSergei/ls-nodejs/issues"
   },
   "homepage": "https://github.com/GarashchenkoSergei/ls-nodejs",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.17.1"
+  },
   "devDependencies": {
     "eslint": "^8.3.0",
     "eslint-config-standard": "^16.0.3",
