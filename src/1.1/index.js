@@ -1,5 +1,9 @@
 const path = require('path');
 const fs = require('fs');
+const util = require('util');
+
+const readdir = util.promisify(fs.readdir);
+const stat = util.promisify(fs.stat);
 
 const sourceDirectory = process.argv[2];
 const targetDirectory = process.argv[3];
@@ -30,30 +34,59 @@ const copyFile = (file, filePath) => {
   });
 };
 
-const sortFiles = (directory) => {
-  fs.readdir(directory, (err, files) => {
-    if (err)
-      console.log(err);
-    else {
-      files.forEach(file => {
-        if(! /^\..*/.test(file)) {
-          const currentPath = path.join(__dirname, directory, file);
-          fs.stat(currentPath, (err, stats) => {
-            if (err)
-              console.log(err);
-            else {
-              if (stats.isFile()) {
-                copyFile(file, currentPath)
-              } else {
-                sortFiles(path.join(directory, file));
-              }
-            }
-          });
-        }
-      })
-    }
-  });
+// async/await vaersion
+
+const checkIsDirectory = async (currentPath) => {
+  const stats = await stat(currentPath);
+
+  return stats;
 };
+
+const sortFiles = async (directory) => {
+  try {
+    const files = await readdir(directory);
+
+    files.forEach(async (file) => {
+      if(/^\..*/.test(file)) {
+        return;
+      };
+
+      const currentPath = path.join(__dirname, directory, file);
+      const stats = await checkIsDirectory(currentPath);
+
+      return stats.isFile() 
+        ? copyFile(file, currentPath) 
+        : sortFiles(path.join(directory, file));
+    })
+  } catch (error) {
+    console.log(error);
+  }
+};
+  
+// Callbacks version
+
+// fs.readdir(directory, (err, files) => {
+//   if (err)
+//     console.log(err);
+//   else {
+//     files.forEach(file => {
+//       if(! /^\..*/.test(file)) {
+//         const currentPath = path.join(__dirname, directory, file);
+//         fs.stat(currentPath, (err, stats) => {
+//           if (err)
+//             console.log(err);
+//           else {
+//             if (stats.isFile()) {
+//               copyFile(file, currentPath)
+//             } else {
+//               sortFiles(path.join(directory, file));
+//             }
+//           }
+//         });
+//       }
+//     })
+//   }
+// });
 
 sortFiles(sourceDirectory);
 
