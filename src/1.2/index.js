@@ -1,9 +1,8 @@
 const express = require('express');
+require('dotenv').config();
 
 const app = express();
 const PORT = '3000';
-process.env.TIME_INTERVAL_SEC = 1;
-process.env.SHUTDOWN_INTERVAL_SEC = 30;
 
 const timeIntervalMsec = process.env.TIME_INTERVAL_SEC * 1000;
 const shutdownIntervalMsec = process.env.SHUTDOWN_INTERVAL_SEC * 1000;
@@ -18,13 +17,13 @@ const createTimer = (req, res, next) => {
     counter = counter + timeIntervalMsec;
     console.log(new Date(counter).toUTCString());
     if (counter > finishtime) {
+      res.write(`${new Date(counter).toUTCString()}\n`);
       res.write('END\n');
       res.end();
 
       return clearTimeout(timeout);
     }
 
-    res.write(`${new Date(counter).toUTCString()}\n`);
     setTimeout(run, timeIntervalMsec);
   }, timeIntervalMsec);
 };
